@@ -25,23 +25,22 @@
       justify-content: center;
       padding: 12px;
     }
-    .app-shell {
-      width: min(430px, 100%);
-      background: var(--card);
-      border-radius: 20px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.45);
-      overflow: hidden;
-      border: 1px solid var(--border);
-      display: flex;
-      flex-direction: column;
-      min-height: 820px;
-      max-height: 820px;
-      position: relative;
-    }
-    .app-header {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+.app-shell {
+  width: min(430px, 100%);
+  background: var(--card);
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  height: 820px;
+  position: relative;
+}
+.app-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
       padding: 14px 16px;
       background: #f1f5f9;
       color: #0f172a;
@@ -50,16 +49,17 @@
       z-index: 5;
     }
     .app-header img { height: 38px; width: auto; }
-    .app-body {
-      flex: 1;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-    }
-    .app-body::-webkit-scrollbar {
-      display: none;
-    }
+.app-body {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding-bottom: 90px;
+}
+.app-body::-webkit-scrollbar {
+  display: none;
+}
     .hero {
       position: relative;
       height: 220px;
@@ -157,17 +157,17 @@
       font-weight: 700;
       cursor: pointer;
     }
-    .tab-bar {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 0;
-      background: #0b1222;
-      border-top: 1px solid var(--border);
-      position: sticky;
-      bottom: 0;
-      z-index: 5;
-      height: 72px;
-    }
+.tab-bar {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0;
+  background: #0b1222;
+  border-top: 1px solid var(--border);
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  height: 72px;
+}
     .tab-btn {
       padding: 10px 6px;
       background: transparent;
