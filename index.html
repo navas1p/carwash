@@ -1,698 +1,532 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <title>Professional POS Mobile</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --secondary-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            --success-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-            --warning-gradient: linear-gradient(135deg, #f97794 0%, #623aa2 100%);
-            --accent-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            
-            --bg: radial-gradient(circle at 20% 20%, rgba(102, 126, 234, 0.15), transparent 35%), #0f172a;
-            --card: rgba(15, 23, 42, 0.95);
-            --border: rgba(51, 65, 85, 0.4);
-            --text: #f8fafc;
-            --muted: #94a3b8;
-            --text-secondary: #cbd5e1;
-            --glow: 0 10px 30px rgba(102, 126, 234, 0.3);
-            --shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
-            --border-radius: 24px;
-        }
-        * { box-sizing: border-box; }
-        body {
-            margin: 0;
-            background: var(--bg);
-            font-family: 'Inter', sans-serif;
-            display: flex;
-            justify-content: center;
-            padding: 16px;
-            min-height: 100vh;
-            align-items: center;
-        }
-        .phone {
-            width: 420px;
-            max-width: 100%;
-            background: linear-gradient(180deg, rgba(17, 24, 39, 0.95), rgba(11, 17, 32, 0.98));
-            border-radius: var(--border-radius);
-            padding: 20px;
-            box-shadow: var(--shadow), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-            min-height: 860px;
-        }
-        .phone::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: var(--primary-gradient);
-        }
-        .status-bar { 
-            display: flex; 
-            justify-content: space-between; 
-            color: var(--text); 
-            font-size: 0.95rem; 
-            padding: 12px 10px 18px; 
-            font-weight: 700; 
-            letter-spacing: 0.5px;
-            background: linear-gradient(90deg, var(--primary-gradient), var(--secondary-gradient));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-align: center;
-        }
-        .card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 20px;
-            color: var(--text);
-            margin-bottom: 16px;
-            box-shadow: var(--glow);
-            backdrop-filter: blur(12px);
-            position: relative;
-            overflow: hidden;
-        }
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: var(--secondary-gradient);
-            opacity: 0.7;
-        }
-        .card h3 { 
-            margin: 0 0 16px; 
-            font-size: 1.25rem; 
-            font-weight: 800; 
-            color: var(--text);
-            letter-spacing: 0.5px;
-            background: linear-gradient(90deg, #f8fafc, #cbd5e1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        label { 
-            display: block; 
-            color: var(--muted); 
-            font-size: 0.88rem; 
-            margin-bottom: 8px; 
-            font-weight: 700; 
-            letter-spacing: 0.3px;
-            text-transform: uppercase;
-        }
-        input {
-            width: 100%; 
-            padding: 14px 16px; 
-            border-radius: 14px; 
-            border: 2px solid var(--border);
-            background: rgba(255, 255, 255, 0.05); 
-            color: var(--text); 
-            font-size: 1.05rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-        .action-btn {
-            margin-top: 10px;
-            width: 100%;
-            padding: 12px 16px;
-            border: none;
-            border-radius: 14px;
-            background: var(--primary-gradient);
-            color: #fff;
-            font-weight: 800;
-            letter-spacing: 0.3px;
-            cursor: pointer;
-            box-shadow: var(--glow);
-        }
-        input:focus {
-            outline: none;
-            border-color: transparent;
-            background: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3);
-        }
-        input::placeholder {
-            color: var(--muted);
-            opacity: 0.7;
-        }
-        .row { 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; 
-            gap: 16px; 
-        }
-        .tabs { 
-            display: flex; 
-            gap: 12px; 
-            margin: 10px 0 18px; 
-            background: rgba(255, 255, 255, 0.05);
-            padding: 6px;
-            border-radius: 16px;
-            border: 1px solid var(--border);
-        }
-        .tab { 
-            flex: 1; 
-            padding: 12px; 
-            border-radius: 12px; 
-            text-align: center; 
-            color: var(--muted); 
-            background: transparent;
-            font-weight: 700; 
-            letter-spacing: 0.3px;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        .tab:hover {
-            color: var(--text-secondary);
-            background: rgba(255, 255, 255, 0.08);
-        }
-        .tab.active { 
-            background: var(--primary-gradient); 
-            color: #fff; 
-            box-shadow: var(--glow);
-            font-weight: 800;
-        }
-        .services { 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; 
-            gap: 12px; 
-        }
-        .service {
-            padding: 16px 14px;
-            border-radius: 16px;
-            background: linear-gradient(145deg, rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.9));
-            color: var(--text);
-            font-weight: 800;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            cursor: pointer;
-            border: 2px solid transparent;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(8px);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        .service::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: var(--secondary-gradient);
-            opacity: 0.8;
-        }
-        .service:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 25px rgba(102, 126, 234, 0.4);
-            border-color: rgba(102, 126, 234, 0.3);
-        }
-        .service span { 
-            font-size: 0.9rem; 
-            font-weight: 800; 
-            color: var(--text); 
-            letter-spacing: 0.3px;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-        }
-        .service small { 
-            font-size: 0.8rem; 
-            color: var(--text-secondary); 
-            font-weight: 700;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 3px 8px;
-            border-radius: 8px;
-        }
-        .invoice-card { 
-            margin-top: 16px; 
-        }
-        .invoice-list { 
-            max-height: 200px; 
-            overflow-y: auto; 
-            margin: 14px 0; 
-            padding-right: 4px;
-        }
-        .invoice-list::-webkit-scrollbar {
-            width: 6px;
-        }
-        .invoice-list::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 3px;
-        }
-        .invoice-list::-webkit-scrollbar-thumb {
-            background: var(--primary-gradient);
-            border-radius: 3px;
-        }
-        .invoice-row { 
-            display: grid; 
-            grid-template-columns: 2fr 1fr 1fr; 
-            color: var(--text); 
-            padding: 14px 0; 
-            border-bottom: 1px solid var(--border); 
-            font-size: 1rem;
-            align-items: center;
-        }
-        .invoice-row:last-child {
-            border-bottom: none;
-        }
-        .pay-grid { 
-            display: grid; 
-            grid-template-columns: repeat(3,1fr); 
-            gap: 12px; 
-            margin-top: 20px;
-        }
-        .pay-btn { 
-            padding: 18px 0; 
-            border: none; 
-            border-radius: 16px; 
-            font-weight: 800; 
-            color: #fff; 
-            cursor: pointer; 
-            font-size: 1.05rem;
-            box-shadow: var(--glow);
-            transition: all 0.2s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        .pay-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
-        }
-        .pay-btn:hover::before {
-            left: 100%;
-        }
-        .pay-btn:active {
-            transform: scale(0.96);
-        }
-        .hidden { display: none; }
-
-        /* Modal */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.65);
-            display: none;
-            align-items: flex-end;
-            justify-content: center;
-            z-index: 50;
-            padding: 12px;
-        }
-        .modal-overlay.active { display: flex; }
-        .modal-sheet {
-            width: 100%;
-            max-width: 440px;
-            background: rgba(17,24,39,0.96);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 18px 18px 0 0;
-            box-shadow: 0 -10px 30px rgba(0,0,0,0.45);
-            padding: 18px;
-            color: var(--text);
-        }
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-        .modal-header h4 {
-            margin: 0;
-            font-size: 1.1rem;
-            font-weight: 800;
-            letter-spacing: 0.3px;
-        }
-        .modal-close {
-            background: none;
-            border: none;
-            color: var(--muted);
-            font-size: 1.2rem;
-            cursor: pointer;
-        }
-        .modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .modal-grid label { font-size: 0.82rem; color: var(--muted); margin-bottom: 6px; display: block; font-weight: 700; letter-spacing: 0.2px; }
-        .modal-grid input, .modal-grid select, .modal-grid textarea {
-            width: 100%;
-            padding: 13px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            background: rgba(255,255,255,0.04);
-            color: var(--text);
-            font-size: 1rem;
-            font-weight: 700;
-        }
-        .modal-grid textarea { resize: vertical; min-height: 80px; grid-column: span 2; }
-        .modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 12px; }
-        .modal-btn {
-            padding: 11px 14px;
-            border: none;
-            border-radius: 12px;
-            font-weight: 800;
-            cursor: pointer;
-        }
-        .modal-btn.cancel { background: rgba(255,255,255,0.05); color: var(--text); border: 1px solid var(--border); }
-        .modal-btn.save { background: var(--primary-gradient); color: #fff; box-shadow: var(--glow); }
-        .cash { 
-            background: var(--warning-gradient); 
-        }
-        .card-payment { 
-            background: var(--success-gradient); 
-        }
-        .offer { 
-            background: var(--accent-gradient); 
-        }
-        
-        /* Custom Select Styling */
-        .custom-select-container {
-            position: relative;
-            width: 100%;
-        }
-        
-        .custom-select {
-            width: 100%;
-            padding: 13px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            background: rgba(255,255,255,0.04);
-            color: var(--text);
-            font-size: 1rem;
-            font-weight: 700;
-            appearance: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            cursor: pointer;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .custom-select::after {
-            content: '▼';
-            position: absolute;
-            right: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            pointer-events: none;
-            color: var(--muted);
-            font-size: 0.8rem;
-        }
-        
-        .custom-select:focus {
-            outline: none;
-            border-color: transparent;
-            background: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3);
-        }
-        
-        .custom-select-options {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background: rgba(17, 24, 39, 0.96);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 0 0 12px 12px;
-            max-height: 200px;
-            overflow-y: auto;
-            z-index: 2;
-            display: none;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-        }
-        
-        .custom-select-option {
-            padding: 12px 16px;
-            cursor: pointer;
-            transition: background 0.2s;
-            color: var(--text);
-            background: rgba(17, 24, 39, 0.96);
-        }
-        
-        .custom-select-option:hover {
-            background: rgba(255, 255, 255, 0.08);
-        }
-        
-        .custom-select-option.selected {
-            background: var(--primary-gradient);
-            color: white;
-        }
-        
-        @media (max-width: 480px) { 
-            body { 
-                padding: 8px; 
-                min-height: auto;
-            } 
-            .phone { 
-                border-radius: 16px; 
-                box-shadow: var(--shadow);
-                padding: 16px;
-            }
-            .row { gap: 12px; }
-            .card { padding: 16px; }
-            .status-bar { padding: 10px 8px 14px; font-size: 0.9rem; }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Express Auto Wash - Mobile Demo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --secondary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --bg: #0f172a;
+      --card: #0b1222;
+      --panel: #111827;
+      --border: #1f2937;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+    }
+    * { box-sizing: border-box; font-family: 'Inter', sans-serif; }
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      padding: 12px;
+    }
+    .app-shell {
+      width: min(430px, 100%);
+      background: var(--card);
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      min-height: 820px;
+      max-height: 820px;
+      position: relative;
+    }
+    .app-header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 14px 16px;
+      background: #f1f5f9;
+      color: #0f172a;
+      position: sticky;
+      top: 0;
+      z-index: 5;
+    }
+    .app-header img { height: 38px; width: auto; }
+    .app-body {
+      flex: 1;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .app-body::-webkit-scrollbar {
+      display: none;
+    }
+    .hero {
+      position: relative;
+      height: 220px;
+      overflow: hidden;
+    }
+    .hero-slide {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+    .hero-slide.active { opacity: 1; }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(15,23,42,0) 20%, rgba(15,23,42,0.8) 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 18px;
+      gap: 6px;
+    }
+    .hero h2 { margin: 0; font-size: 1.3rem; }
+    .hero p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+    .section {
+      padding: 16px;
+      background: var(--card);
+    }
+    .section-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      margin: 0 0 12px;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    .card-grid .btn { margin-left: auto; margin-right: auto; }
+    .offer-card {
+      background: linear-gradient(145deg, #1e293b, #334155);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      padding: 14px;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.35);
+    }
+    .offer-card h4 { margin: 8px 0 4px; }
+    .offer-card p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+    .price-row { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
+    .price { font-weight: 800; font-size: 1.05rem; }
+    .btn {
+      width: 90%;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      font-weight: 800;
+      color: #0b1120;
+      background: var(--primary-gradient);
+      cursor: pointer;
+      margin: 8px auto 0;
+    }
+    .wallet-card {
+      margin-top: 8px;
+      background: linear-gradient(135deg, #667eea, #4facfe);
+      border-radius: 16px;
+      padding: 14px;
+      color: #0b1120;
+    }
+    .wallet-balance { font-size: 1.8rem; font-weight: 800; margin: 6px 0 10px; }
+    .wallet-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .wallet-actions .btn { padding: 12px; width: 100%; cursor: pointer; }
+    .history {
+      margin-top: 10px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px;
+    }
+    .history-row {
+      display: flex; justify-content: space-between;
+      color: var(--muted); font-size: 0.93rem;
+      padding: 6px 0; border-bottom: 1px solid var(--border);
+    }
+    .history-row:last-child { border-bottom: none; }
+    .cta-row { display: flex; gap: 10px; }
+    .ghost-btn {
+      flex: 1;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .tab-bar {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0;
+      background: #0b1222;
+      border-top: 1px solid var(--border);
+      position: sticky;
+      bottom: 0;
+      z-index: 5;
+      height: 72px;
+    }
+    .tab-btn {
+      padding: 10px 6px;
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.85rem;
+    }
+    .tab-btn svg {
+      width: 22px;
+      height: 22px;
+      display: block;
+    }
+    .tab-btn.active {
+      color: var(--text);
+      background: rgba(255,255,255,0.04);
+    }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.65);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 20;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-card {
+      width: min(440px, 100%);
+      background: #111827;
+      border-radius: 18px;
+      padding: 20px;
+      border: 1px solid var(--border);
+      position: relative;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.4);
+      text-align: center;
+    }
+    .modal-card h3 { margin: 0 0 12px; }
+    .modal-close {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-    <div class="phone">
-        <div class="status-bar"><span>ABC CARWASH PRO</span><span>12:45</span></div>
-        <div id="mainContent">
-        <div class="card">
-            <h3>Transaction Details</h3>
-            <div class="row">
-                <div>
-                    <label>Customer Details</label>
-                    <input type="text" id="customerInput" placeholder="Search Customer ID/Name...">
-                    <button class="action-btn" id="addCustomerBtn">Add Customer</button>
-                </div>
-                <div>
-                    <label>Vehicle Details</label>
-                    <input type="text" id="vehicleInput" placeholder="Plate Number...">
-                    <button class="action-btn" id="addVehicleBtn">Add Vehicle</button>
-                </div>
-            </div>
-            <div class="row" style="margin-top:14px;">
-                <div>
-                    <label>Customer Name</label>
-                    <input type="text" value="Walk-in Customer" readonly>
-                </div>
-                <div>
-                    <label>Mobile Number</label>
-                    <input type="tel" placeholder="050 xxx xxxx">
-                </div>
-            </div>
+  <div class="app-shell">
+    <header class="app-header">
+      <img src="logo1.png" alt="Express Auto Wash">
+    </header>
+    <div class="app-body">
+      <section class="hero">
+        <div class="hero-slide active" style="background-image:url('banner1.jpg');"></div>
+        <div class="hero-slide" style="background-image:url('banner2.jpg');"></div>
+        <div class="hero-overlay">
+          <h2>Premium Car Care, Simplified</h2>
+          <p>Book services, grab offers, and keep your wallet topped up.</p>
         </div>
+      </section>
 
-        <div class="card">
-            <h3>Services</h3>
-            <div class="tabs">
-                <button class="tab active" data-tab="fast">Fast Moving</button>
-                <button class="tab" data-tab="quick">Quick Service</button>
-                <button class="tab" data-tab="detail">Detailed</button>
+      <section class="section tab-content tab-offers active">
+        <div class="section-title">Special Offers</div>
+        <div class="card-grid">
+          <div class="offer-card">
+            <div style="font-weight:800;">Weekend Wash</div>
+            <h4>Weekend Wash Bundle</h4>
+            <p>Exterior + Interior + Tire Shine</p>
+            <div class="price-row">
+              <span class="price">AED 75</span>
+              <button class="btn">Book Now</button>
             </div>
-            <div class="services" id="fast">
-                <button class="service" onclick="addToInvoice('Quick Wash',30)"><span>Quick Wash</span><small>AED 30.00</small></button>
-                <button class="service" onclick="addToInvoice('Body & Vacuum',45)"><span>Body & Vacuum</span><small>AED 45.00</small></button>
-                <button class="service" onclick="addToInvoice('Full Polish',120)"><span>Full Polish</span><small>AED 120.00</small></button>
-                <button class="service" onclick="addToInvoice('Engine Clean',55)"><span>Engine Clean</span><small>AED 55.00</small></button>
+          </div>
+          <div class="offer-card">
+            <div style="font-weight:800;">AC Sanitization</div>
+            <h4>AC Sanitization + Cabin Clean</h4>
+            <p>Anti-bacterial treatment + Vacuum</p>
+            <div class="price-row">
+              <span class="price">AED 99</span>
+              <button class="btn">Book Now</button>
             </div>
-            <div class="services" id="quick" style="display:none;">
-                <button class="service" onclick="addToInvoice('Rinse Only',20)"><span>Rinse Only</span><small>AED 20.00</small></button>
-                <button class="service" onclick="addToInvoice('Tyre Shine',10)"><span>Tyre Shine</span><small>AED 10.00</small></button>
-                <button class="service" onclick="addToInvoice('Mat Wash',15)"><span>Mat Wash</span><small>AED 15.00</small></button>
+          </div>
+          <div class="offer-card">
+            <div style="font-weight:800;">Full Detail</div>
+            <h4>Full Detail Package</h4>
+            <p>Wash, Wax, Polish, Interior Deep Clean</p>
+            <div class="price-row">
+              <span class="price">AED 199</span>
+              <button class="btn">Book Now</button>
             </div>
-            <div class="services" id="detail" style="display:none;">
-                <button class="service" onclick="addToInvoice('Ceramic Coating',1200)"><span>Ceramic Coating</span><small>AED 1200.00</small></button>
-                <button class="service" onclick="addToInvoice('AC Sanitization',150)"><span>AC Sanitization</span><small>AED 150.00</small></button>
-                <button class="service" onclick="addToInvoice('Interior Detail',250)"><span>Interior Detail</span><small>AED 250.00</small></button>
-            </div>
+          </div>
         </div>
+      </section>
 
-        <div class="card invoice-card">
-            <h3>Invoice Summary</h3>
-            <div class="invoice-list" id="invoiceList"></div>
-            <div class="invoice-row" style="font-weight:800; border-bottom:none; padding-top: 16px; margin-top: 12px; background: rgba(255, 255, 255, 0.03); border-radius: 12px;">
-                <span>Total Payable</span><span></span><span id="total">AED 0.00</span>
+      <section class="section tab-content tab-services" style="display:none;">
+        <div class="section-title">Service Types</div>
+        <div class="card-grid">
+          <div class="offer-card">
+            <div style="font-weight:800;">Quick Wash</div>
+            <h4>Quick Wash</h4>
+            <p>Exterior wash, tire shine, window clean</p>
+            <div class="price-row">
+              <span class="price">AED 30</span>
+              <button class="btn">Book</button>
             </div>
-            <div class="pay-grid">
-                <button class="pay-btn cash">Cash</button>
-                <button class="pay-btn card-payment">Card</button>
-                <button class="pay-btn offer">Offer</button>
+          </div>
+          <div class="offer-card">
+            <div style="font-weight:800;">Full Polish</div>
+            <h4>Full Polish</h4>
+            <p>Wax, polish, clean interior & exterior</p>
+            <div class="price-row">
+              <span class="price">AED 120</span>
+              <button class="btn">Book</button>
             </div>
+          </div>
+          <div class="offer-card">
+            <div style="font-weight:800;">AC Sanitization</div>
+            <h4>AC Sanitization</h4>
+            <p>Anti-bacterial treatment for cabin air</p>
+            <div class="price-row">
+              <span class="price">AED 150</span>
+              <button class="btn">Book</button>
+            </div>
+          </div>
+          <div class="offer-card">
+            <div style="font-weight:800;">Interior Deep Clean</div>
+            <h4>Interior Deep Clean</h4>
+            <p>Steam clean, leather treatment, odor removal</p>
+            <div class="price-row">
+              <span class="price">AED 180</span>
+              <button class="btn">Book</button>
+            </div>
+          </div>
         </div>
-        </div>
+      </section>
 
-        <div id="inlineForm" class="card hidden">
-            <h3 id="inlineFormTitle">Add</h3>
-            <form id="inlineFormEl">
-                <div class="row" style="grid-template-columns: 1fr 1fr;">
-                    <div>
-                        <label>Customer Type</label>
-                        <div class="custom-select-container">
-                            <select class="custom-select" id="customerType">
-                                <option value="" selected disabled>Select type</option>
-                                <option value="personal">Personal</option>
-                                <option value="company">Company</option>
-                            </select>
-                            <div class="custom-select-options" id="customerTypeOptions">
-                                <div class="custom-select-option" data-value="">Select type</div>
-                                <div class="custom-select-option" data-value="personal">Personal</div>
-                                <div class="custom-select-option" data-value="company">Company</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <label>Name *</label>
-                        <input type="text" placeholder="Enter name" required>
-                    </div>
-                    <div>
-                        <label>Contact Number *</label>
-                        <input type="tel" placeholder="+971 4 000 0000" required>
-                    </div>
-                    <div>
-                        <label>VAT No</label>
-                        <input type="text" placeholder="VAT number">
-                    </div>
-                    <div>
-                        <label>Gender</label>
-                        <div class="custom-select-container">
-                            <select class="custom-select gender-select" id="genderSelect">
-                                <option value="" selected disabled>Select gender</option>
-                                <option value="male">Male</option>
-                                <option value="female">Female</option>
-                            </select>
-                            <div class="custom-select-options" id="genderSelectOptions">
-                                <div class="custom-select-option" data-value="">Select gender</div>
-                                <div class="custom-select-option" data-value="male">Male</div>
-                                <div class="custom-select-option" data-value="female">Female</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div style="margin-top:12px;">
-                    <label>Notes</label>
-                    <textarea rows="3" style="width:100%; padding:12px; border-radius:12px; border:1px solid var(--border); background: rgba(255,255,255,0.04); color: var(--text);" placeholder="Additional notes"></textarea>
-                </div>
-                <div class="modal-actions">
-                    <button type="button" class="modal-btn cancel" id="inlineCancel">Cancel</button>
-                    <button type="submit" class="modal-btn save">Save</button>
-                </div>
-            </form>
+    <section class="section tab-content tab-wallet" style="display:none;">
+      <div class="section-title">Wallet</div>
+      <div class="wallet-card">
+        <span style="font-weight:700;">Current Balance</span>
+        <div class="wallet-balance">AED 250.00</div>
+        <div class="wallet-actions">
+          <button class="btn wallet-topup" data-amount="50">+ AED 50</button>
+          <button class="btn wallet-topup" data-amount="100">+ AED 100</button>
+          <button class="btn wallet-topup" data-amount="200">+ AED 200</button>
         </div>
+        <div class="cta-row" style="margin-top:10px;">
+          <button class="ghost-btn">Top-up</button>
+          <button class="ghost-btn">Transactions</button>
+        </div>
+        </div>
+        <div class="history">
+          <div class="history-row"><span>2025-12-20 • Top Up</span><span>+ AED 100.00</span></div>
+          <div class="history-row"><span>2025-12-18 • Wash - Quick</span><span>- AED 30.00</span></div>
+          <div class="history-row"><span>2025-12-12 • Top Up</span><span>+ AED 200.00</span></div>
+        </div>
+      </section>
+
+      <section class="section tab-content tab-qr" style="display:none;">
+        <div class="section-title">QR</div>
+        <div class="offer-card" style="text-align:center;">
+          <h4>Scan to Pay</h4>
+          <img src="qr.png" alt="QR Code" style="width: 200px; height: 200px; object-fit: contain; margin: 10px auto 16px; background: #0f172a; border-radius: 12px; padding: 10px;">
+          <p style="color: var(--muted); margin: 0;">Your wallet balance is AED 143.00</p>
+        </div>
+      </section>
+
+      <section class="section tab-content tab-more" style="display:none;">
+        <div class="section-title">More</div>
+        <div class="card-grid">
+          <div class="offer-card">
+            <h4>Support</h4>
+            <p>Chat with us for help.</p>
+          </div>
+          <div class="offer-card">
+            <h4>Locations</h4>
+            <p>Find nearby wash stations.</p>
+          </div>
+          <div class="offer-card">
+            <h4>Transactions</h4>
+            <p>View your recent activity.</p>
+            <button class="btn" id="openTransactions">View</button>
+          </div>
+          <div class="offer-card">
+            <h4>Login</h4>
+            <p>Access your account.</p>
+            <button class="btn" id="openLogin">Login</button>
+          </div>
+        </div>
+      </section>
     </div>
 
-    <script>
-        const tabs = document.querySelectorAll('.tab');
-        const panels = { 
-            fast: document.getElementById('fast'), 
-            quick: document.getElementById('quick'), 
-            detail: document.getElementById('detail') 
-        };
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                tabs.forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-                Object.keys(panels).forEach(k => panels[k].style.display = 'none');
-                panels[tab.dataset.tab].style.display = 'grid';
-            });
+    <div class="tab-bar">
+      <button class="tab-btn active" data-tab="offers">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"></rect><path d="M16 3h-3a1 1 0 0 0-1 1v3h5V4a1 1 0 0 0-1-1Z"></path></svg>
+        <span>Offers</span>
+      </button>
+      <button class="tab-btn" data-tab="services">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l3 8 4-16 3 8h4"></path></svg>
+        <span>Services</span>
+      </button>
+      <button class="tab-btn" data-tab="wallet">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"></rect><path d="M16 12h.01"></path></svg>
+        <span>Wallet</span>
+      </button>
+      <button class="tab-btn" data-tab="qr">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h4v4H3zM17 3h4v4h-4zM3 17h4v4H3zM10 3h4v4h-4zM10 10h4v4h-4zM17 10h4v4h-4zM10 17h4v4h-4zM17 17h4v4h-4z"></path></svg>
+        <span>QR</span>
+      </button>
+      <button class="tab-btn" data-tab="more">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="1"></circle><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle></svg>
+        <span>More</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Transactions Modal -->
+  <div class="modal-overlay" id="transactionsModal">
+    <div class="modal-card" style="width:min(360px,100%); text-align:left;">
+      <button class="modal-close" id="closeTransactions">&times;</button>
+      <h3>My Transactions</h3>
+      <p style="color: var(--muted);">Demo user: customer / 123</p>
+      <div class="history">
+        <div class="history-row"><span>2025-12-20 • Top Up</span><span>+ AED 100.00</span></div>
+        <div class="history-row"><span>2025-12-18 • Wash - Quick</span><span>- AED 30.00</span></div>
+        <div class="history-row"><span>2025-12-12 • Top Up</span><span>+ AED 200.00</span></div>
+        <div class="history-row"><span>2025-12-10 • Interior Detail</span><span>- AED 250.00</span></div>
+      </div>
+      <button class="btn" id="closeTransactionsBottom" style="margin-top:12px;">Close</button>
+    </div>
+  </div>
+
+  <!-- Login Modal -->
+  <div class="modal-overlay" id="loginModal">
+    <div class="modal-card" style="width:min(360px,100%); text-align:left;">
+      <h3>Login</h3>
+      <div style="display:flex; flex-direction:column; gap:12px; text-align:left;">
+        <div>
+          <label style="display:block; color: var(--muted); margin-bottom:6px;">Email or Mobile</label>
+          <input type="text" id="loginUser" placeholder="you@example.com" style="width:100%; padding:12px; border-radius:12px; border:1px solid var(--border); background: #0f172a; color: var(--text);">
+        </div>
+        <div>
+          <label style="display:block; color: var(--muted); margin-bottom:6px;">Password</label>
+          <input type="password" id="loginPass" placeholder="••••••••" style="width:100%; padding:12px; border-radius:12px; border:1px solid var(--border); background: #0f172a; color: var(--text);">
+        </div>
+        <button class="btn" id="loginSubmit">Sign In</button>
+        <button class="btn" id="closeLoginBottom" style="background:#1e293b; color: var(--text);">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Top-up Modal -->
+  <div class="modal-overlay" id="topupModal">
+    <div class="modal-card" style="width:min(360px,100%); text-align:left;">
+      <button class="modal-close" id="closeTopup">&times;</button>
+      <h3>Choose Payment</h3>
+      <p style="color: var(--muted);">Pay AED <span id="topupAmountLabel">0</span>.00</p>
+      <div class="card-grid" style="grid-template-columns: 1fr; gap: 10px;">
+        <button class="btn" id="payApple">Apple Pay</button>
+        <button class="btn" id="payCard">Card</button>
+      </div>
+      <p id="topupMessage" style="color: var(--muted); margin-top: 12px;"></p>
+    </div>
+  </div>
+
+  <script>
+    // Hero slider
+    const slides = Array.from(document.querySelectorAll('.hero-slide'));
+    let idx = 0;
+    setInterval(() => {
+      slides[idx].classList.remove('active');
+      idx = (idx + 1) % slides.length;
+      slides[idx].classList.add('active');
+    }, 5000);
+
+    // Tabs
+    const tabBtns = Array.from(document.querySelectorAll('.tab-btn'));
+    const tabMap = {
+      offers: document.querySelector('.tab-offers'),
+      services: document.querySelector('.tab-services'),
+      wallet: document.querySelector('.tab-wallet'),
+      qr: document.querySelector('.tab-qr'),
+      more: document.querySelector('.tab-more')
+    };
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabBtns.forEach(b => b.classList.remove('active'));
+        Object.values(tabMap).forEach(el => {
+          if (el) {
+            el.classList.remove('active');
+            el.style.display = 'none';
+          }
         });
-
-        const invoiceList = document.getElementById('invoiceList');
-        const totalEl = document.getElementById('total');
-        let total = 0;
-        
-        function addToInvoice(name, price) {
-            const row = document.createElement('div');
-            row.className = 'invoice-row';
-            row.innerHTML = `<span>${name}</span><span>1</span><span>AED ${price.toFixed(2)}</span>`;
-            invoiceList.appendChild(row);
-            total += price;
-            totalEl.textContent = 'AED ' + total.toFixed(2);
-            
-            // Scroll to bottom
-            invoiceList.scrollTop = invoiceList.scrollHeight;
+        const key = btn.dataset.tab;
+        btn.classList.add('active');
+        if (tabMap[key]) {
+          tabMap[key].classList.add('active');
+          tabMap[key].style.display = 'block';
         }
+      });
+    });
 
-        // Inline form logic
-        const mainContent = document.getElementById('mainContent');
-        const inlineForm = document.getElementById('inlineForm');
-        const inlineFormTitle = document.getElementById('inlineFormTitle');
-        const inlineFormEl = document.getElementById('inlineFormEl');
-        const inlineCancel = document.getElementById('inlineCancel');
-        const addCustomerBtn = document.getElementById('addCustomerBtn');
-        const addVehicleBtn = document.getElementById('addVehicleBtn');
+    // Transactions Modal
+    const transactionsModal = document.getElementById('transactionsModal');
+    const openTransactions = document.getElementById('openTransactions');
+    const closeTransactions = document.getElementById('closeTransactions');
+    const closeTransactionsBottom = document.getElementById('closeTransactionsBottom');
+    openTransactions?.addEventListener('click', (e) => { e.preventDefault(); transactionsModal?.classList.add('active'); });
+    closeTransactions?.addEventListener('click', () => transactionsModal?.classList.remove('active'));
+    closeTransactionsBottom?.addEventListener('click', () => transactionsModal?.classList.remove('active'));
+    transactionsModal?.addEventListener('click', (e) => { if (e.target === transactionsModal) transactionsModal.classList.remove('active'); });
 
-        function openInlineForm(title) {
-            inlineFormTitle.textContent = title;
-            mainContent.classList.add('hidden');
-            inlineForm.classList.remove('hidden');
-        }
-        function closeInlineForm() {
-            inlineForm.classList.add('hidden');
-            mainContent.classList.remove('hidden');
-            inlineFormEl.reset();
-        }
+    // Login Modal
+    const loginModal = document.getElementById('loginModal');
+    const closeLoginBottom = document.getElementById('closeLoginBottom');
+    const openLoginBtn = document.getElementById('openLogin');
+    openLoginBtn?.addEventListener('click', (e) => { e.preventDefault(); loginModal?.classList.add('active'); });
+    closeLoginBottom?.addEventListener('click', () => loginModal?.classList.remove('active'));
+    loginModal?.addEventListener('click', (e) => { if (e.target === loginModal) loginModal.classList.remove('active'); });
 
-        addCustomerBtn?.addEventListener('click', () => openInlineForm('Add Customer'));
-        addVehicleBtn?.addEventListener('click', () => openInlineForm('Add Vehicle'));
-        inlineCancel?.addEventListener('click', closeInlineForm);
-        inlineFormEl?.addEventListener('submit', (e) => {
-            e.preventDefault();
-            closeInlineForm();
-        });
+    // Top-up modal
+    const walletButtons = document.querySelectorAll('.wallet-topup');
+    const topupModal = document.getElementById('topupModal');
+    const closeTopup = document.getElementById('closeTopup');
+    const topupAmountLabel = document.getElementById('topupAmountLabel');
+    const topupMessage = document.getElementById('topupMessage');
+    const payApple = document.getElementById('payApple');
+    const payCard = document.getElementById('payCard');
+    let pendingAmount = 0;
 
-        // Custom Select Implementation for all custom selects
-        document.addEventListener('DOMContentLoaded', function() {
-            const containers = document.querySelectorAll('.custom-select-container');
-
-            containers.forEach(container => {
-                const selectEl = container.querySelector('.custom-select');
-                const optionsContainer = container.querySelector('.custom-select-options');
-                const options = container.querySelectorAll('.custom-select-option');
-
-                selectEl.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    const isOpen = optionsContainer.style.display === 'block';
-                    // Close others
-                    document.querySelectorAll('.custom-select-options').forEach(el => el.style.display = 'none');
-                    optionsContainer.style.display = isOpen ? 'none' : 'block';
-                });
-
-                options.forEach(option => {
-                    option.addEventListener('click', function() {
-                        const value = this.getAttribute('data-value');
-                        // Update select value (for form submission if needed)
-                        selectEl.value = value;
-                        // Mark selected
-                        options.forEach(opt => opt.classList.remove('selected'));
-                        this.classList.add('selected');
-                        optionsContainer.style.display = 'none';
-                    });
-                });
-            });
-
-            // Close when clicking outside
-            document.addEventListener('click', function(e) {
-                if (!e.target.closest('.custom-select-container')) {
-                    document.querySelectorAll('.custom-select-options').forEach(el => el.style.display = 'none');
-                }
-            });
-        });
-    </script>
+    walletButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        pendingAmount = Number(btn.dataset.amount || 0);
+        if (topupAmountLabel) topupAmountLabel.textContent = pendingAmount.toFixed(0);
+        if (topupMessage) topupMessage.textContent = '';
+        topupModal?.classList.add('active');
+      });
+    });
+    const completeTopup = () => {
+      if (topupMessage) topupMessage.textContent = 'You have successfully recharged your wallet';
+    };
+    payApple?.addEventListener('click', completeTopup);
+    payCard?.addEventListener('click', completeTopup);
+    closeTopup?.addEventListener('click', () => {
+      topupModal?.classList.remove('active');
+    });
+    topupModal?.addEventListener('click', (e) => { if (e.target === topupModal) topupModal.classList.remove('active'); });
+  </script>
 </body>
 </html>
-
